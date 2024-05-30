@@ -1,0 +1,236 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Notes API Documentation</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"><link rel="dns-prefetch" href="//fonts.googleapis.com"><link rel="dns-prefetch" href="//fonts.gstatic.com"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"><style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
+        * {
+            font-family: Inter;
+        }
+
+        .bg-dark {
+            background-color: #1F2937 !important;
+        }
+
+        .underline-blue {
+            text-decoration-color: #d63384;
+        }
+
+        body {
+            background-color: #111827;
+            color: #fff;
+        }
+
+        .container {
+            margin-top: 3em !important;
+        }
+
+        h1,
+        h2,
+        h4,
+        h4,
+        h5 {
+            color: #fff;
+            font-weight: bold;
+        }
+
+
+
+        pre {
+            background-color: #1F2937;
+            color: #77E1BC;
+            padding: 2em;
+            border-radius: 5px;
+            font-family: JetBrains Mono;
+        }
+
+        li {
+            font-size: 14.5px;
+        }
+
+        code {
+            padding: 2px;
+            border-radius: 3px;
+            background-color: #1F2937;
+            color: #DD7EB8;
+        }
+
+        blockquote {
+            border-left: 4px solid var(--theme-color, #461dc2);
+            color: #c5c5c5;
+            font-weight: bold;
+            font-size: 14px;
+            margin: 2em 0;
+            padding-left: 20px;
+        }
+
+        .sidebar {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            position: fixed;
+            height: 100%;
+            width: 200px;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+        }
+
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .sidebar a:hover {
+            color: #ccc;
+        }
+
+        @media (max-width: 767px) {
+            nav {
+                display: block !important;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+                overflow-y: visible;
+                display: none;
+            }
+
+            .sidebar.show {
+                display: block;
+            }
+
+            .sidebar a {
+                display: block;
+                padding: 10px;
+                margin-bottom: 0;
+            }
+
+            .navbar-toggler {
+                display: block;
+                border: none;
+            }
+
+            .navbar-toggler-icon {
+                background-color: #1F2937;
+                height: 2.5em;
+            }
+
+            .navbar-nav {
+                flex-direction: column;
+                gap: 10px;
+                /* Add gap between links */
+            }
+
+            .navbar-collapse {
+                justify-content: flex-end;
+            }
+
+            /* Styles for nav links in mobile view */
+            .navbar-nav .nav-link {
+                padding: 1em;
+                font-size: var(--bs-nav-link-font-size);
+                font-weight: var(--bs-nav-link-font-weight);
+                color: var(--bs-nav-link-color);
+                text-decoration: none;
+                text-align: center;
+                background: 0 0;
+                border: 0;
+                transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+            }
+
+            pre {
+                font-size: 10px;
+            }
+        }</style><script defer="defer" src="main.2c2b4b6e398f7b42e172.js"></script></head><body><nav class="navbar navbar-dark bg-dark px-3 sticky-top" style="display: none;"><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbarNav"><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="#add-note">Add Note</a></li><li class="nav-item"><a class="nav-link" href="#get-note">Get Notes</a></li><li class="nav-item"><a class="nav-link" href="#edit-note">Edit Note</a></li><li class="nav-item"><a class="nav-link" href="#delete-note">Delete Note</a></li></ul></div></nav><div id="add-note"></div><div class="container px-4"><h1 class="mb-5">Notes API Documentation</h1><blockquote>This API was created by ARGF using Node.js with Express, and also PostgreSQL as the database.</blockquote><p class="mb-3">Base URL: <a class="text-white underline-blue" href="https://argf.netlify.app/" target="_blank">https://argf.netlify.app/</a></p><p class="mb-5">Showcase: <a class="text-white underline-blue" href="https://argf.netlify.app/notes" target="_blank">https://argf.netlify.app/notes</a></p><h2 class="mb-5">Endpoints</h2><h4>Adds a new note</h4><blockquote>Adds a new note to the database and sends it to a Discord webhook.</blockquote><ul><li>URL: <code>/.netlify/functions/api/add-notes</code></li><li>Method: <code>POST</code></li><div id="get-note"></div><li>Request Body:</li><pre class="mt-3">
+{
+    "title": "Note Title",
+    "description": "Note Description"
+}
+        </pre><li>Response:</li><pre class="mt-3 mb-5">
+{
+    "message": "Note added and sent to Discord webhook successfully",
+    "note": {
+        "id": 1,
+        "title": "Note Title",
+        "description": "Note Description",
+        "timestamp": "2024-05-26T12:00:00.000Z"
+    }
+}
+        </pre></ul><h4>Get all notes</h4><blockquote>Retrieves all notes from the database.</blockquote><ul><li>URL: <code>/.netlify/functions/api/notes</code></li><li>Method: <code>GET</code></li><li>Response:</li><div id="edit-note"></div><pre class="mt-3 mb-5">
+[
+    {
+        "id": 1,
+        "title": "Note Title 1",
+        "description": "Note Description 1",
+        "timestamp": "2024-05-26T12:00:00.000Z"
+    },
+    {
+        "id": 2,
+        "title": "Note Title 2",
+        "description": "Note Description 2",
+        "timestamp": "2024-05-25T12:00:00.000Z"
+    },
+    ...
+]
+        </pre></ul><h4>Get Note by Id</h4><blockquote>Retrieve a specific note from the database by its ID.</blockquote><ul><li>URL: <code>/.netlify/functions/api/note/:id</code></li><li>Method: <code>GET</code></li><li>Response:</li><pre class="mt-3 mb-5">
+{
+    "id": 1,
+    "title": "Note Title 1",
+    "description": "Note Description 1",
+    "timestamp": "2024-05-26T12:00:00.000Z"
+}
+    </pre></ul><h4>Edit Note by Id</h4><blockquote>Updates an existing note in the database.</blockquote><ul><li>URL: <code>/.netlify/functions/api/edit-notes/:id</code></li><li>Method: <code>PUT</code></li><li>Request Body:</li><pre class="mt-3">
+{
+    "title": "Updated Note Title",
+    "description": "Updated Note Description"
+}
+        </pre><li>Response:</li><pre class="mt-3 mb-5">
+{
+    "message": "Note updated successfully",
+    "note": {
+        "id": 1,
+        "title": "Updated Note Title",
+        "description": "Updated Note Description",
+        "timestamp": "2024-05-26T12:00:00.000Z"
+    }
+}
+        </pre></ul><div id="delete-note"></div><h4>Delete Note by Id</h4><blockquote>Deletes a note from the database.</blockquote><ul><li>URL: <code>/.netlify/functions/api/delete-notes/:id</code></li><li>Method: <code>DELETE</code></li><li class="mb-3">Response:</li><pre class="mb-5">
+{
+    "message": "Note deleted successfully",
+    "note": {
+        "id": 1,
+        "title": "Updated Note Title",
+        "description": "Updated Note Description",
+        "timestamp": "2024-05-26T12:00:00.000Z"
+    }
+}
+        </pre></ul><h4>Search Note</h4><blockquote>Searches for notes in the database based on a search query.</blockquote><ul><li>URL: <code>/.netlify/functions/api/search-note?query=your_search_query</code></li><li>Method: <code>GET</code></li><li>Query Parameter:<ul><li><code>query</code>: The search query to find notes</li></ul></li><li>Response:</li><pre class="mt-3 mb-5">
+[
+    {
+        "id": 1,
+        "title": "Note Title 1",
+        "description": "Note Description 1",
+        "timestamp": "2024-05-26T12:00:00.000Z"
+    },
+    {
+        "id": 2,
+        "title": "Note Title 2",
+        "description": "Note Description 2",
+        "timestamp": "2024-05-25T12:00:00.000Z"
+    },
+    ...
+]
+    </pre></ul></div><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script><script>document.addEventListener("DOMContentLoaded", function () {
+            const navLinks = document.querySelectorAll(".nav-link");
+
+            navLinks.forEach(function (link) {
+                link.addEventListener("click", function () {
+                    const navbarCollapse = document.querySelector("#navbarNav");
+                    const bootstrapNavbar = new bootstrap.Collapse(navbarCollapse, {
+                        toggle: false
+                    });
+                    bootstrapNavbar.hide();
+                });
+            });
+        });</script></body></html>
